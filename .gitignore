@@ -11,7 +11,7 @@ dist
 models
 data_tools
 .vscode
-*.jpg
+#*.jpg
 !tests/*.jpg
 *.pkl
 *.torch

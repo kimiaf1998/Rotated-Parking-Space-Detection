@@ -132,11 +132,13 @@ class CocoDataset(data.dataset.Dataset):
 
         ann_ids = self.coco.getAnnIds(imgIds=id)
         annotations = self.coco.loadAnns(ann_ids)
+        print("annotations : ", annotations)
 
         boxes, categories = [], []
         for ann in annotations:
             if ann['bbox'][2] < 1 and ann['bbox'][3] < 1:
                 continue
+            print("box : ", ann['bbox'])
             boxes.append(ann['bbox'])
             cat = ann['category_id']
             if 'categories' in self.coco.dataset:
@@ -156,6 +158,8 @@ class CocoDataset(data.dataset.Dataset):
 
         if self.training:
             data, targets = zip(*batch)
+            print("target : ", targets)
+            print("len target : ", len(targets))
             max_det = max([t.size()[0] for t in targets])
             targets = [torch.cat([t, torch.ones([max_det - t.size()[0], 5]) * -1]) for t in targets]
             targets = torch.stack(targets, 0)
